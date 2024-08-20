@@ -1,0 +1,22 @@
+{
+    "columns": [
+        {
+            "ColumnName": "last_connect",
+            "ColumnType": "bigint",
+            "PK": false,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "last_disconnect",
+            "ColumnType": "bigint",
+            "PK": false,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "last_edge_type",
+            "ColumnType": "string",
+            "PK": false,
+            "UserDefined": false
+        }
+    ]
+}

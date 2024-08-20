@@ -1,0 +1,52 @@
+{
+    "columns": [
+        {
+            "ColumnName": "user_id",
+            "ColumnType": "string",
+            "PK": true,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "email_validated",
+            "ColumnType": "bool",
+            "PK": false,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "phone",
+            "ColumnType": "string",
+            "PK": false,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "phone_validated",
+            "ColumnType": "bool",
+            "PK": false,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "two_factor_method",
+            "ColumnType": "string",
+            "PK": false,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "two_factor_enabled",
+            "ColumnType": "bool",
+            "PK": false,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "oidc_enabled",
+            "ColumnType": "bool",
+            "PK": false,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "email_lower_case",
+            "ColumnType": "string",
+            "PK": false,
+            "UserDefined": false
+        }
+    ]
+}

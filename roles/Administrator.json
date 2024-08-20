@@ -1,0 +1,55 @@
+{
+    "Description": "Default role that is applied to a user who has rights to everything",
+    "Name": "Administrator",
+    "Permissions": {
+        "AllCollections": {
+            "Level": 0
+        },
+        "AllExternalDatabases": {
+            "Level": 0
+        },
+        "AllServices": {
+            "Level": 0
+        },
+        "CodeServices": [],
+        "Collections": [],
+        "Deployments": {
+            "Level": 0
+        },
+        "DevicesList": {
+            "Level": 0
+        },
+        "EdgesList": {
+            "Level": 0
+        },
+        "ExternalDatabases": [],
+        "Files": [],
+        "ManageUsers": {
+            "Level": 0
+        },
+        "MsgHistory": {
+            "Level": 0
+        },
+        "Portals": [],
+        "Roles": {
+            "Level": 0
+        },
+        "ServiceCaches": [],
+        "Timers": {
+            "Level": 0
+        },
+        "Topics": [],
+        "Triggers": {
+            "Level": 0
+        },
+        "UsersList": {
+            "Level": 0
+        },
+        "adapters": {
+            "Level": 0
+        },
+        "usersecrets": {
+            "Level": 0
+        }
+    }
+}

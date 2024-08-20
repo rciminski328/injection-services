@@ -1,0 +1,28 @@
+{
+    "columns": [
+        {
+            "ColumnName": "is_device_proxy",
+            "ColumnType": "bool",
+            "PK": false,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "proxy_authentication_method",
+            "ColumnType": "string",
+            "PK": false,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "bound_devices",
+            "ColumnType": "jsonb",
+            "PK": false,
+            "UserDefined": false
+        },
+        {
+            "ColumnName": "attached_proxies",
+            "ColumnType": "jsonb",
+            "PK": false,
+            "UserDefined": false
+        }
+    ]
+}
