@@ -1,0 +1,8 @@
+{
+    "description": "",
+    "frequency": 60,
+    "name": "checkNotReportingAssetsEveryMinute",
+    "repeats": -1,
+    "service_name": "getNotReportingAssets",
+    "start_time": "2024-08-20T19:34:52.24Z"
+}
