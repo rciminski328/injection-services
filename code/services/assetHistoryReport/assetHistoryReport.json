@@ -1,0 +1,13 @@
+{
+    "auto_balance": false,
+    "auto_restart": null,
+    "concurrency": 0,
+    "dependencies": "log,clearblade,clearblade_async,http",
+    "execution_timeout": 60,
+    "logging_enabled": false,
+    "name": "assetHistoryReport",
+    "params": [
+        ""
+    ],
+    "run_user": ""
+}

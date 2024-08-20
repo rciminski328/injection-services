@@ -1,0 +1,9 @@
+{
+    "auth": true,
+    "description": "",
+    "messaging_url": "platform.clearblade.com:1883",
+    "name": "Process-chirpstack-messages",
+    "platform_url": "https://platform.clearblade.com",
+    "system_key": "d09bf6e70c88bcfba8f0d8f9c16f",
+    "system_secret": "D09BF6E70CDEFC98B4CCCD86FA41"
+}
