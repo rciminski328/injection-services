@@ -12,13 +12,13 @@
  * @param {CbServer.Resp} resp
  */
 
-function platformProcessChirpstackMessages_test(req, resp) {
+function platformProcessChirpstackMessages(req, resp) {
     var count = 0;
     var Secret = ClearBladeAsync.Secret();
     var loraClient; 
     var cbClient;
 
-    log("service starting");
+    log("service starting"); 
 
     function fetchAppIdFromCustomSettings() {
         return new Promise(function (resolve, reject) {
