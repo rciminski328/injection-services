@@ -1,6 +1,6 @@
 /**
- * Type: Stream Service
- * Description: A service that does not have an execution timeout which allows for infinite execution of logic.
+ * Type: Micro Service
+ * Description: A short-lived service which is expected to complete within a fixed period of time.
  * @param {CbServer.BasicReq} req
  * @param {string} req.systemKey
  * @param {string} req.systemSecret
@@ -12,173 +12,168 @@
  * @param {CbServer.Resp} resp
  */
 
-function platformProcessChirpstackMessages(req, resp) {
-
-    ClearBlade.init({ request: req });
-
+function platformProcessChirpstackMessages_test(req, resp) {
     var count = 0;
-
-    log("service starting")
-
-    var radLoRaOptions = {
-        address: "52.91.153.120",
-        port: 1883
-    };
-
-    //the client that connects to chirpstack
-    var loraClient;
-    try {
-        loraClient = new MQTT.Client(radLoRaOptions);
-        log("connected to lora client")
-    } catch (e) {
-        resp.error("failed to init lora client: " + e);
-    }
-
-    //log("creating cb client");
+    var Secret = ClearBladeAsync.Secret();
+    var loraClient; 
     var cbClient;
-    try {
-        cbClient = new MQTT.Client();
-    } catch (e) {
-        resp.error("failed to init cb client: " + e);
+
+    log("service starting");
+
+    function fetchAppIdFromCustomSettings() {
+        return new Promise(function (resolve, reject) {
+            var query = ClearBlade.Query({ collectionName: "custom_settings" });
+            query.equalTo("id", "application_id"); 
+            query.fetch(function (err, data) {
+                if (err) {
+                    log("Error fetching application ID: " + JSON.stringify(data));
+                    reject("Unable to fetch application ID: " + JSON.stringify(data));
+                } else if (data.DATA.length === 0) {
+                    reject("No application ID found in custom settings.");
+                } else {
+                    var appId = JSON.parse(data.DATA[0].config).app; // Retrieve the app ID from the config field
+                    log("Fetched application ID: " + appId);
+                    resolve(appId);
+                }
+            });
+        });
     }
 
-    // This is the topic needed for the sensor uplink
-    const LORA_UPLINK_TOPIC = "application/+/device/+/event/up"
+    Promise.all([Secret.read("Chirpstack_CA_Cert"), Secret.read("Chirpstack_Client_Cert"), Secret.read("Chirpstack_Client_Key"), fetchAppIdFromCustomSettings()])
+        .then(function (results) {
+            var certs = results.slice(0, 3);
+            var appId = results[3];
 
-    loraClient.subscribe(LORA_UPLINK_TOPIC, function (topic, msg) {
-        log("topic: " + topic);
-        log("raw message: " + JSON.stringify(msg));
-        processMessage(msg, topic);
-    });
+            var radLoRaOptions = {
+                address: "lns1.rad.com",
+                port: 7883,
+                use_tls: true,
+                tls_config: {
+                    ca_cert: certs[0],
+                    client_cert: certs[1],
+                    client_key: certs[2]
+                }
+            };
 
+            try {
+                loraClient = new MQTT.Client(radLoRaOptions);
+                log("connected to lora client");
+            } catch (e) {
+                resp.error("failed to init lora client: " + e);
+            }
+
+            try {
+                cbClient = new MQTT.Client();
+                log("connected to cb client");
+            } catch (e) {
+                resp.error("failed to init cb client: " + e);
+            }
+
+            const LORA_UPLINK_TOPIC = "$share/chirpstacksensor/application/" + appId + "/device/+/event/up";
+
+            loraClient.subscribe(LORA_UPLINK_TOPIC, function (topic, msg) {
+                log("topic: " + topic);
+                log("raw message: " + JSON.stringify(msg));
+                processMessage(msg, topic);
+            }).catch(function (reason) {
+                resp.error("failed to subscribe: " + reason.message);
+            });
+
+            loraClient.subscribe("$share/chirpstackgateway/us915_1/gateway/647fdafffe01ef0a/state", function (topic, msg) {
+                log("gateway topic: " + topic);
+                log("gateway raw message: " + JSON.stringify(msg));
+                var payload = new TextDecoder("utf-8").decode(msg.payload_bytes);
+                log(JSON.stringify(payload));
+            }).catch(function (reason) {
+                resp.error("failed to subscribe to gateway topic: " + reason.message);
+            });
+        })
+        .catch(function (reason) {
+            resp.error("failed to retrieve certs or application ID: " + reason);
+        });
 
     function processMessage(msg) {
         try {
-
-            //UPDATE REGULAR ASSET
             var payload = new TextDecoder("utf-8").decode(msg.payload_bytes);
-            log("message")
-            log(JSON.stringify(payload))
+            log(JSON.stringify(payload));
             msg = JSON.parse(payload);
-            log("keys are " + Object.keys(msg))
-            var device = msg.deviceInfo.devEui
-            // log("device data is: ", msg.data)
-            log("DEVICE is: ", device)
-            var keys = Object.keys(msg)
-
+            log("keys are " + Object.keys(msg));
+            var device = msg.deviceInfo.devEui;
+            log("device data is: ", msg.data);
+            log("DEVICE is: ", device);
+            var keys = Object.keys(msg);
 
             var assetUpdateMessage = {
-                id: msg.deviceInfo.devEui, //ID Of the unique asset
-                type: msg.deviceInfo.deviceProfileName,  //Type of Asset to update, ex: "EM-300-TH"
+                id: msg.deviceInfo.devEui, // ID of the unique asset
+                type: msg.deviceInfo.deviceProfileName, // Type of Asset to update, ex: "EM-300-TH"
                 custom_data: {
                     Reporting: true
                 },
-                group_ids: ["000001"]
-            }
-            if(msg.deviceInfo.deviceProfileName.includes("WS301")){
-                assetUpdateMessage.type = "WS301"
-            }else if (msg.deviceInfo.deviceProfileName.includes("WS202")){
-                assetUpdateMessage.type = "WS202"
+                group_ids: ["default"]
+            };
+
+            var gatewayUpdateMessage = {
+                id: "647fdafffe01ef0a", // TODO: map gateway ID from payload
+                type: "gateway",
+                custom_data: {
+                    Reporting: true
+                },
+                group_ids: ["default"]
+            };
+
+            var attributes = Object.keys(msg.object); // this field contains sensor data
+            for (x = 0; x < attributes.length; x++) {
+                assetUpdateMessage.custom_data[attributes[x]] = msg.object[attributes[x]];
             }
 
-            var attributes = Object.keys(msg.object) //this field contains sensor data
-            for (x = 0; x < attributes.length; x++) {
-                assetUpdateMessage.custom_data[attributes[x]] = msg.object[attributes[x]]
+            // Custom processing based on device profile name
+            if (msg.deviceInfo.deviceProfileName.includes("WS301")) {
+                assetUpdateMessage.type = "WS301";
+                assetUpdateMessage.custom_data.doorOpen = assetUpdateMessage.custom_data.magnet_status !== "close";
+                assetUpdateMessage.custom_data.uninstalled = assetUpdateMessage.custom_data.tamper_status === "uninstalled";
+            } else if (msg.deviceInfo.deviceProfileName.includes("WS202")) {
+                assetUpdateMessage.type = "WS202";
+                assetUpdateMessage.custom_data.daylight = assetUpdateMessage.custom_data.daylight === "light";
+                assetUpdateMessage.custom_data.motion = assetUpdateMessage.custom_data.pir === "trigger";
+            } else if (msg.deviceInfo.deviceProfileName.includes("WS303")) {
+                assetUpdateMessage.type = "WS303";
+                assetUpdateMessage.custom_data.leak_detected = assetUpdateMessage.custom_data.leakage_status !== "normal";
+            } else if (msg.deviceInfo.deviceProfileName.includes("WS101")) {
+                assetUpdateMessage.type = "WS101";
+                if (assetUpdateMessage.custom_data.press === "short" || assetUpdateMessage.custom_data.press === "double") {
+                    assetUpdateMessage.custom_data.button_pushed = true;
+                    log("Publishing this for button: ", JSON.stringify(assetUpdateMessage));
+                    cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage));
+                    cbClient.publish("_monitor/asset/default/data", JSON.stringify(gatewayUpdateMessage));
+                    setTimeout(function () {
+                        assetUpdateMessage.last_updated = new Date().toISOString();
+                        assetUpdateMessage.custom_data.button_pushed = false;
+                        log("Publishing this for button: ", JSON.stringify(assetUpdateMessage));
+                        cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage));
+                        cbClient.publish("_monitor/asset/default/data", JSON.stringify(gatewayUpdateMessage));
+                    }, 10000);
+                    return;
+                } else {
+                    assetUpdateMessage.custom_data.button_pushed = false; // continue to post historical data
+                }
+            } else if (msg.deviceInfo.deviceProfileName.includes("EM300-TH")) {
+                assetUpdateMessage.type = "EM300-TH";
+                assetUpdateMessage.custom_data.temperature = Math.round((((9 / 5) * (assetUpdateMessage.custom_data.temperature)) + 32) * 10) / 10;
+            } else if (msg.deviceInfo.deviceProfileName.includes("AM103L")) {
+                assetUpdateMessage.type = "AM103L";
+                assetUpdateMessage.custom_data.temperature = Math.round((((9 / 5) * (assetUpdateMessage.custom_data.temperature)) + 32) * 10) / 10;
+            } else {
+                log("unsupported asset type " + msg.deviceInfo.deviceProfileName);
+                return;
             }
 
             // *********** PUBLISH ***********
             log("Publishing this: ", JSON.stringify(assetUpdateMessage));
-            cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage))
+            cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage));
+            cbClient.publish("_monitor/asset/default/data", JSON.stringify(gatewayUpdateMessage));
 
-
-            //UPDATE CES DASHBOARD:
-            if (device === "24e124725d243358") { //Indoor airquality
-                ID_1 = "air_quality_sensor_1";
-                ID_2 = "31913feb-50ba-46bb-90cc-f17d94bcffe4" //the store ID
-                //publish for sensor
-                assetUpdateMessage.id = ID_1
-                assetUpdateMessage.type = "AM103L"
-                assetUpdateMessage.group_ids = ["000001"]
-                assetUpdateMessage.custom_data.temperature = Math.round((((9/5)*(assetUpdateMessage.custom_data.temperature)) + 32)*10)/10
-                log("Publishing this for air_quality_sensor_1: ", JSON.stringify(assetUpdateMessage));
-                cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage))
-
-                //publish for store
-                assetUpdateMessage.id = ID_2
-                assetUpdateMessage.type = "store"
-                assetUpdateMessage.group_ids = ["CES"]
-                log("Publishing this for store: ", JSON.stringify(assetUpdateMessage));
-                cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage))
-            } else if (device === "24e124136d376160") { //fridge temp
-                ID_1 = "temp_humidity_sensor_1"; //fridge temp
-                ID_2 = "3d0b744b-8b83-4767-9cb3-9f394caf70b6" //refrigerator
-                //publish for sensor
-                assetUpdateMessage.id = ID_1
-                assetUpdateMessage.type = "EM300-TH"
-                assetUpdateMessage.group_ids = ["000001"]
-                assetUpdateMessage.custom_data.temperature = Math.round((((9/5)*(assetUpdateMessage.custom_data.temperature)) + 32)*10)/10
-                log("Publishing this for temp_humidity_sensor_1: ", JSON.stringify(assetUpdateMessage));
-                cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage))
-
-                //publish for refrigerator
-                assetUpdateMessage.id = ID_2
-                assetUpdateMessage.type = "refrigerator"
-                assetUpdateMessage.group_ids = ["CES"]
-                assetUpdateMessage.custom_data.isRunning = true //if we have temp, fridge is running
-                log("Publishing this for refrigerator: ", JSON.stringify(assetUpdateMessage));
-                cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage))
-            } else if (device === "24e124538d221950") {
-                ID_1 = "motion_detection_sensor_1"; //PIR Sensor
-                ID_2 = "3d0b744b-8b83-4767-9cb3-9f394caf70b6" //refrigerator
-                assetUpdateMessage.custom_data.motion = assetUpdateMessage.custom_data.pir === "normal" ? false : true
-                if (assetUpdateMessage.custom_data.pir !== "normal") {
-                    count++
-                }
-                assetUpdateMessage.custom_data.motionCount = count
-
-                //publish for sensor
-                assetUpdateMessage.id = ID_1
-                assetUpdateMessage.type = "EM300-TH"
-                assetUpdateMessage.group_ids = ["000001"]
-                log("Publishing this for motion_detection_sensor_1: ", JSON.stringify(assetUpdateMessage));
-                cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage))
-
-                //publish for refrigerator
-                assetUpdateMessage.id = ID_2
-                assetUpdateMessage.type = "refrigerator"
-                assetUpdateMessage.group_ids = ["CES"]
-                log("Publishing this for refrigerator: ", JSON.stringify(assetUpdateMessage));
-                cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage))
-            } else if (device === "24e124141d314571") {
-                log("door status " + assetUpdateMessage.custom_data.magnet_status)
-                ID_1 = "door_open_closed_sensor"; //door Sensor
-                ID_2 = "3d0b744b-8b83-4767-9cb3-9f394caf70b6" //refrigerator
-
-                if(assetUpdateMessage.custom_data.magnet_status === "close"){
-                    assetUpdateMessage.custom_data.doorOpen = false
-                }else{
-                    assetUpdateMessage.custom_data.doorOpen = true
-                }
-
-
-                //publish for sensor
-                assetUpdateMessage.id = ID_1
-                assetUpdateMessage.type = "WS301"
-                assetUpdateMessage.group_ids = ["000001"]
-                log("Publishing this for door_open_closed_sensor: ", JSON.stringify(assetUpdateMessage));
-                cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage))
-
-                assetUpdateMessage.id = ID_2
-                assetUpdateMessage.type = "refrigerator"
-                assetUpdateMessage.group_ids = ["CES"]
-                log("Publishing this for refrigerator: ", JSON.stringify(assetUpdateMessage));
-                cbClient.publish("_monitor/asset/default/data", JSON.stringify(assetUpdateMessage))
-            }
-
-        }
-        catch (e) {
+        } catch (e) {
             log("failed to parse json: " + e);
         }
     }
-
 }
