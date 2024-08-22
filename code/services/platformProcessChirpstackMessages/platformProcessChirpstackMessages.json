@@ -2,7 +2,7 @@
     "auto_balance": true,
     "auto_restart": null,
     "concurrency": 1,
-    "dependencies": "log,mqtt,clearblade",
+    "dependencies": "log,mqtt,clearblade,clearblade_async",
     "execution_timeout": -1,
     "logging_enabled": false,
     "name": "platformProcessChirpstackMessages",
