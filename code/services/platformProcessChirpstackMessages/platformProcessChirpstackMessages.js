@@ -18,7 +18,7 @@ function platformProcessChirpstackMessages(req, resp) {
     var loraClient; 
     var cbClient;
 
-    log("service starting"); 
+    log("service starting");
 
     function fetchAppIdFromCustomSettings() {
         return new Promise(function (resolve, reject) {
@@ -113,7 +113,7 @@ function platformProcessChirpstackMessages(req, resp) {
             };
 
             var gatewayUpdateMessage = {
-                id: "647fdafffe01ef0a", // TODO: map gateway ID from payload
+                id: msg.rxInfo[0].gatewayId,
                 type: "gateway",
                 custom_data: {
                     Reporting: true
