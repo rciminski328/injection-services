@@ -1,6 +1,6 @@
 {
     "developer_email": "",
-    "messaging_url": "platform.clearblade.com:1883",
-    "platform_url": "https://platform.clearblade.com",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ4NjQ4MjMsImlhdCI6MTcyNDQzMjgyMywic2lkIjoiYmQ2MTkyNjctNmJkMy00N2JlLTk4ODktZWQzMDA0NDlkZjQxIiwidHQiOjEsInVpZCI6ImNhYTQ4YWRjMGNkY2Q3OTBmZjk0YmJkN2IzNDEiLCJ1dCI6MX0.9Qr31YIcOwbNaqX53dOIAIHin3OUCUYRDQXR3LPySNY"
+    "messaging_url": "att.clearblade.com:1883",
+    "platform_url": "https://att.clearblade.com",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOi0xLCJpYXQiOjE3MjQ0MzMyNzQsInNpZCI6ImFhYWE0NzAwLTEwM2UtNDNlMC04ZDZlLTliYWVhMDA4ODc2YiIsInR0IjoxLCJ1aWQiOiJhNDg1ODVlNzBjODg4YzlmYmFlMDgxYjc4OWYxMDEiLCJ1dCI6MX0.MQFdgcL20yiKRs8PRHwkE0hamVQWYfSu4zfl0AjbZ38"
 }

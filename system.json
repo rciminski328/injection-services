@@ -1,9 +1,9 @@
 {
     "auth": true,
-    "description": "",
-    "messaging_url": "platform.clearblade.com:1883",
-    "name": "injection-services",
-    "platform_url": "https://platform.clearblade.com",
-    "system_key": "bac5a5ec0cfaf9d9dbfedff36f",
-    "system_secret": "BAC5A5EC0C96D6A5A4BAC4FAA178"
+    "description": "Develop Template",
+    "messaging_url": "att.clearblade.com:1883",
+    "name": "ia-823-1208",
+    "platform_url": "https://att.clearblade.com",
+    "system_key": "8288c6ec0cce83949981d0cba64a",
+    "system_secret": "8288C6EC0CFEABF7ACFB9394BB0F"
 }
