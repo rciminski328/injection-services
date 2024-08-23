@@ -2,11 +2,11 @@
     "remotes": {
         "init": {
             "Name": "init",
-            "PlatformURL": "https://att.clearblade.com",
-            "MessagingURL": "att.clearblade.com:1883",
-            "SystemKey": "dce3c4ec0cb8dab7cbbcbae4eb9501",
-            "SystemSecret": "DCE3C4EC0C88CBE6C5F3B09580D601",
-            "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOi0xLCJpYXQiOjE3MjQ0MzE5NjksInNpZCI6ImY0NDAxNzA0LTQ4ZTQtNDZmMC1iZWQ0LTI0YTMyNWJmNzc1MiIsInR0IjoxLCJ1aWQiOiJhNDg1ODVlNzBjODg4YzlmYmFlMDgxYjc4OWYxMDEiLCJ1dCI6MX0.m0VJ6TR8tL1m27Zh8_qXE0hRODFHAUrPZ8WNK2yYkOQ"
+            "PlatformURL": "https://platform.clearblade.com",
+            "MessagingURL": "platform.clearblade.com:1883",
+            "SystemKey": "bac5a5ec0cfaf9d9dbfedff36f",
+            "SystemSecret": "BAC5A5EC0C96D6A5A4BAC4FAA178",
+            "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ4NjQ4MjMsImlhdCI6MTcyNDQzMjgyMywic2lkIjoiYmQ2MTkyNjctNmJkMy00N2JlLTk4ODktZWQzMDA0NDlkZjQxIiwidHQiOjEsInVpZCI6ImNhYTQ4YWRjMGNkY2Q3OTBmZjk0YmJkN2IzNDEiLCJ1dCI6MX0.9Qr31YIcOwbNaqX53dOIAIHin3OUCUYRDQXR3LPySNY"
         }
     },
     "current": "init"
