@@ -2,5 +2,10 @@
     "Administrator": "Administrator",
     "Anonymous": "Anonymous",
     "Authenticated": "Authenticated",
-    "CollectionHandler": "bee9b9ec0ce2f0c792eccacea31e"
+    "CollectionHandler": "84e4c4ec0cb09cece18abbbe895e",
+    "Editor": "86e4c4ec0ce4fa9388f5fbaecdc701",
+    "ResetPasswordHandler": "86e4c4ec0c98d89ee4d5d4bff9de01",
+    "Super Administrator": "86e4c4ec0cf8ebf7ebf4e9e2a737",
+    "UpdateEventHandler": "86e4c4ec0cbedbb0eff8e5cdb69a01",
+    "Viewer": "86e4c4ec0cc8e6a8cd99c9b38a0a"
 }
