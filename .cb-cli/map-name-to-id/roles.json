@@ -2,10 +2,10 @@
     "Administrator": "Administrator",
     "Anonymous": "Anonymous",
     "Authenticated": "Authenticated",
-    "CollectionHandler": "da98c6ec0cc6d2e9bbbea3a3c0f601",
-    "Editor": "dc98c6ec0cd2b7c0d1a6b8e7888801",
-    "ResetPasswordHandler": "dc98c6ec0c84c6b699d1f1eaa18301",
-    "Super Administrator": "dc98c6ec0c9ac081a28590b68dcd01",
-    "UpdateEventHandler": "de98c6ec0cf6b29ed1bffdf09c9e01",
-    "Viewer": "de98c6ec0c969d83bbb1eee78c2e"
+    "CollectionHandler": "d0a8c6ec0ccebbbaf9a8fa9ab59e01",
+    "Editor": "d0a8c6ec0cac8f9cf7f490e6a28b01",
+    "ResetPasswordHandler": "d2a8c6ec0ce6edbbffceb5a3c28001",
+    "Super Administrator": "d2a8c6ec0c908180b7b7b88d8ca201",
+    "UpdateEventHandler": "d2a8c6ec0cc0b4f9a7aeefd4d82d",
+    "Viewer": "d2a8c6ec0cb8ee99c1fbc7d8a8d101"
 }
