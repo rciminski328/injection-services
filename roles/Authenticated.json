@@ -1,7 +1,6 @@
-[{
-    "ID": "Authenticated",
-    "Name": "Authenticated",
+{
     "Description": "Default role that is applied to all authenticated users",
+    "Name": "Authenticated",
     "Permissions": {
         "AllCollections": {
             "Level": 0
@@ -12,112 +11,148 @@
         "AllServices": {
             "Level": 0
         },
-        "CodeServices": [{
-            "Name": "deleteActions",
-            "Level": 1
-        }, {
-            "Name": "deleteOldData",
-            "Level": 1
-        }, {
-            "Name": "fetchPlotData",
-            "Level": 1
-        }, {
-            "Name": "createHeatmapReports",
-            "Level": 1
-        }, {
-            "Name": "deleteAdapterConfig",
-            "Level": 1
-        }, {
-            "Name": "deleteHeatmapReports",
-            "Level": 1
-        }, {
-            "Name": "fetchLogs",
-            "Level": 1
-        }, {
-            "Name": "generativeAIBuilder",
-            "Level": 1
-        }, {
-            "Name": "updateNimbelinkDeviceConfig",
-            "Level": 1
-        }, {
-            "Name": "updateChirpstackSecrets",
-            "Level": 1
-        }, {
-            "Name": "createAdapterConfig",
-            "Level": 1
-        }, {
-            "Name": "deleteAssetComments",
-            "Level": 1
-        }, {
-            "Name": "deleteGroups",
-            "Level": 1
-        }, {
-            "Name": "deleteRuleTypes",
-            "Level": 1
-        }, {
-            "Name": "invalidateRulesAndTypes",
-            "Level": 1
-        }, {
-            "Name": "newUserEmail",
-            "Level": 1
-        }, {
-            "Name": "simulateAssetLocation",
-            "Level": 1
-        }, {
-            "Name": "executeUIQuery",
-            "Level": 1
-        }, {
-            "Name": "simulateAssetStatus",
-            "Level": 1
-        }, {
-            "Name": "updateAssetComments",
-            "Level": 1
-        }, {
-            "Name": "azureAuth",
-            "Level": 1
-        }, {
-            "Name": "traverseForInvalidRules",
-            "Level": 1
-        }, {
-            "Name": "createTableItems",
-            "Level": 1
-        }, {
-            "Name": "deleteUsers",
-            "Level": 1
-        }, {
-            "Name": "handleRulesEntityUpdates",
-            "Level": 1
-        }, {
-            "Name": "updateTableItems",
-            "Level": 1
-        }, {
-            "Name": "clearDurationCache",
-            "Level": 1
-        }, {
-            "Name": "createActions",
-            "Level": 1
-        }, {
-            "Name": "manageUsers",
-            "Level": 1
-        }, {
-            "Name": "retrieveNimbelinkDeviceConfig",
-            "Level": 1
-        }, {
-            "Name": "sendSMS",
-            "Level": 1
-        }, {
-            "Name": "createRuleTypes",
-            "Level": 1
-        }, {
-            "Name": "deleteActionTypes",
-            "Level": 1
-        }, {
-            "Name": "deleteTableItems",
-            "Level": 1
-        }, {
-            "Name": "fetchTableItems",
-            "Level": 1
-        }],
+        "CodeServices": [
+            {
+                "Level": 1,
+                "Name": "azureAuth"
+            },
+            {
+                "Level": 1,
+                "Name": "clearDurationCache"
+            },
+            {
+                "Level": 1,
+                "Name": "createActions"
+            },
+            {
+                "Level": 1,
+                "Name": "createAdapterConfig"
+            },
+            {
+                "Level": 1,
+                "Name": "createHeatmapReports"
+            },
+            {
+                "Level": 1,
+                "Name": "createRuleTypes"
+            },
+            {
+                "Level": 1,
+                "Name": "createTableItems"
+            },
+            {
+                "Level": 1,
+                "Name": "deleteActionTypes"
+            },
+            {
+                "Level": 1,
+                "Name": "deleteActions"
+            },
+            {
+                "Level": 1,
+                "Name": "deleteAdapterConfig"
+            },
+            {
+                "Level": 1,
+                "Name": "deleteAssetComments"
+            },
+            {
+                "Level": 1,
+                "Name": "deleteGroups"
+            },
+            {
+                "Level": 1,
+                "Name": "deleteHeatmapReports"
+            },
+            {
+                "Level": 1,
+                "Name": "deleteOldData"
+            },
+            {
+                "Level": 1,
+                "Name": "deleteRuleTypes"
+            },
+            {
+                "Level": 1,
+                "Name": "deleteTableItems"
+            },
+            {
+                "Level": 1,
+                "Name": "deleteUsers"
+            },
+            {
+                "Level": 1,
+                "Name": "executeUIQuery"
+            },
+            {
+                "Level": 1,
+                "Name": "fetchLogs"
+            },
+            {
+                "Level": 1,
+                "Name": "fetchPlotData"
+            },
+            {
+                "Level": 1,
+                "Name": "fetchTableItems"
+            },
+            {
+                "Level": 1,
+                "Name": "generativeAIBuilder"
+            },
+            {
+                "Level": 1,
+                "Name": "handleRulesEntityUpdates"
+            },
+            {
+                "Level": 1,
+                "Name": "invalidateRulesAndTypes"
+            },
+            {
+                "Level": 1,
+                "Name": "manageUsers"
+            },
+            {
+                "Level": 1,
+                "Name": "newUserEmail"
+            },
+            {
+                "Level": 1,
+                "Name": "retrieveNimbelinkDeviceConfig"
+            },
+            {
+                "Level": 1,
+                "Name": "sendSMS"
+            },
+            {
+                "Level": 1,
+                "Name": "simulateAssetLocation"
+            },
+            {
+                "Level": 1,
+                "Name": "simulateAssetStatus"
+            },
+            {
+                "Level": 1,
+                "Name": "traverseForInvalidRules"
+            },
+            {
+                "Level": 1,
+                "Name": "updateAssetComments"
+            },
+            {
+                "Level": 1,
+                "Name": "updateChirpstackSecrets"
+            },
+            {
+                "Level": 1,
+                "Name": "updateNimbelinkDeviceConfig"
+            },
+            {
+                "Level": 1,
+                "Name": "updateTableItems"
+            }
+        ],
         "Collections": [],
         "Deployments": {
             "Level": 0
@@ -144,10 +179,12 @@
         "Timers": {
             "Level": 0
         },
-        "Topics": [{
-            "Name": "#",
-            "Level": 3
-        }],
+        "Topics": [
+            {
+                "Level": 3,
+                "Name": "#"
+            }
+        ],
         "Triggers": {
             "Level": 0
         },
@@ -161,4 +198,4 @@
             "Level": 15
         }
     }
-}]
+}
