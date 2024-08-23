@@ -4,9 +4,9 @@
             "Name": "init",
             "PlatformURL": "https://att.clearblade.com",
             "MessagingURL": "att.clearblade.com:1883",
-            "SystemKey": "b6a8c6ec0ce4c2f2e7aebbd593d601",
-            "SystemSecret": "B6A8C6EC0C809CFDDBC799D9DD8201",
-            "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOi0xLCJpYXQiOjE3MjQ0MzUyNjIsInNpZCI6ImRmYTkyMWE3LTg2ZDktNDhiMS1hYTM2LWEyZWM2YzZjNmFhYyIsInR0IjoxLCJ1aWQiOiJhNDg1ODVlNzBjODg4YzlmYmFlMDgxYjc4OWYxMDEiLCJ1dCI6MX0.8jMQj_ax-30Pi-KYyY1vg6NcktciEjB5QTFzUd569FQ"
+            "SystemKey": "d6c1c6ec0c8cf298a5a68b8bb3ff01",
+            "SystemSecret": "D6C1C6EC0CDEE1D2BCA7FAE79C21",
+            "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOi0xLCJpYXQiOjE3MjQ0MzcxNzgsInNpZCI6IjA1MjdkNzFmLTEzMjktNDg2My04NDcyLTg4MTQxZThlNmZmNyIsInR0IjoxLCJ1aWQiOiJhNDg1ODVlNzBjODg4YzlmYmFlMDgxYjc4OWYxMDEiLCJ1dCI6MX0.BL1OHqOyhGV1y3EoBm2AGV1qtTxiIglDE_CTMn-czvc"
         }
     },
     "current": "init"
