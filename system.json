@@ -2,8 +2,8 @@
     "auth": true,
     "description": "Develop Template",
     "messaging_url": "att.clearblade.com:1883",
-    "name": "ia-823-1208",
+    "name": "ia-823-1225",
     "platform_url": "https://att.clearblade.com",
-    "system_key": "8288c6ec0cce83949981d0cba64a",
-    "system_secret": "8288C6EC0CFEABF7ACFB9394BB0F"
+    "system_key": "be98c6ec0c98baf5ef98d58dd877",
+    "system_secret": "BE98C6EC0CA2F2C394FDD1C49FAE01"
 }
