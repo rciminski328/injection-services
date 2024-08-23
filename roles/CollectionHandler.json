@@ -82,6 +82,10 @@
             },
             {
                 "Level": 1,
+                "Name": "updateChirpstackSecrets"
+            },
+            {
+                "Level": 1,
                 "Name": "updateTableItems"
             }
         ],
