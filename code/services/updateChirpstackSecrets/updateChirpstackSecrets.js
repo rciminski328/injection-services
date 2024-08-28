@@ -22,7 +22,7 @@ function updateChirpstackSecrets(req, resp) {
     function updateSecret(name, data) {
         log("Updating secret: " + name + " with data: " + data);
 
-        return Secret.update(name, data)
+        return Secret.create(name, data)
             .then(function () {
                 log("Secret " + name + " updated successfully.");
             })
